@@ -1,0 +1,39 @@
+# Managed by Puppet
+
+# Fully-qualified domain name of the Ceph Rados Gateway S3-compatible service,
+# with a port number optionally appended (e.g radosgw.example.com or radosgw.example.com:8443)
+host_name = <%= @rgw_host %>
+
+# Path to a mime-types file to associate mime types with extensions for
+# objects stored in this service (no default)
+# mime_types_path = /etc/mime.types
+
+# Set to true to use https, or false to use http (default to https)
+use_https = <%= @use_https %>
+
+# Use virtual-host style (bucket as host name) for https requests
+# (default to false)
+use_virtual_host = <%= @use_virtual_host %>
+
+# Verify https peer credentials
+# This requires that the rgw S3 service's ssl certificate be signed by a CA
+# included in the operating system's trust root.  To add trusted CA certs,
+# see the man page of update-ca-certificates or update-ca-trust, depending
+# on the system.
+# (default to true)
+verify_peer = <%= @verify_peer %>
+
+# Rados Gateway Admin bucket (default to admin)
+# ceph_rgw_admin_bucket = admin
+
+# AccessKeyId for a Rados Gateway User with users:read caps 
+ceph_rgw_admin_access_key_id = <%= @rgw_access_key %>
+
+# SecretAccessKey for a Rados Gateway User with users:read caps
+ceph_rgw_admin_secret_access_key = <%= @rgw_secret_key %>
+
+# Maximum number of retries for connection faults 
+max_retries = 5
+
+# Base retry delay for exponential back-off when retrying (in ms)
+retry_delay = 400

@@ -1,0 +1,7 @@
+threads <%= @process_threads %>
+load_dsi_module ceph
+process_user <%= @process_user %>
+
+<% if @enable_debug == true -%>
+$GLOBUS_S3_DEBUG "1023,<%= @debug_location %>/s3.log"
+<% end -%>
