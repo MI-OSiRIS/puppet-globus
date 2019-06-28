@@ -1,8 +1,3 @@
-# After setting configuration with this module run /bin/globus-connect-server-setup to initialize
-# 
-# Be careful about re-running the script if you cloned this endpoint to use as managed endpoint
-# Running the script will change the DN and break the cloned endpoint 
-
 # TODO:  There are many globus options not covered by this module.  
 # PR welcome if you add them as parameters and include in conf templates
 # Alternately the module can be forked and the base conf template altered to fit your needs
@@ -15,12 +10,14 @@ class globus (
 	Optional[String] $default_directory,
 	Boolean $enable_sharing = false,
 	Boolean $manage_firewall = false,  # use puppetlabs/firewall resources to configure rules
+	Boolean $run_setup = true,  # always run gcs-setup after changes to globus-connect-server.conf
 	String $firewall_order = '100',
 	Boolean $manage_repo = true,
 	Array[String] $gftp_ctrl_src = [ '54.237.254.192/29']
 ) {
 
-	File <| tag == 'globus-config' |> ~> Exec['globus-restart']
+	File <| tag == 'globus-config' |> 
+	~> Service['globus-gridftp-server']
 	
 	if $manage_firewall {
 		firewall { "${firewall_order} allow GridFTP control channels for Globus":
@@ -64,7 +61,6 @@ class globus (
 		ensure => directory,
 	} ->
 
-	# globus package installs this file as a symbolic link so we'll stick with same name but overwrite
 	file { '/etc/gridftp.d/globus-connect-server-gridftp-logging':
 		content => template("globus/gridftp-logging.erb"),
 		tag => [ 'globus-config' ]
@@ -79,13 +75,13 @@ class globus (
 		tag => [ 'globus-config' ]
 	}
 
-	exec { 'globus-setup':
-		command => '/bin/globus-connect-server-setup',
-		refreshonly => true
+	if $run_setup {
+		exec { 'globus-setup':
+			command => '/bin/globus-connect-server-setup',
+			refreshonly => true,
+			subscribe => File['/etc/globus-connect-server.conf']
+	 	}
 	 }
 
-	 exec { 'globus-restart':
-	 	command => '/sbin/service globus-gridftp-server restart',
-	 	refreshonly => true
-	 }
+	 service { 'globus-gridftp-server': ensure => running }
 }
