@@ -6,7 +6,7 @@ class globus::ceph (
     Boolean $use_https = true,
     Boolean $verify_peer = true,
     Boolean $use_virtual_host = false,
-    Boolean $enable_debug = true,
+    Boolean $enable_debug = false,
     String $debug_location = '/tmp',
     String $process_user = 'globus-ceph',
     Integer $process_threads = 2
