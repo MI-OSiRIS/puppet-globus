@@ -48,7 +48,7 @@ class globus (
 		package { 'globus-toolkit-repo': 
 			ensure => installed,
 			provider => rpm, 
-			source => "http://toolkit.globus.org/ftppub/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm",
+			source => "http://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm",
 			before => Package['globus-connect-server']
 		} 
 	}
