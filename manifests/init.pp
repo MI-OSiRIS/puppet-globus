@@ -45,7 +45,7 @@ class globus (
 	}
 
 	if $manage_repo {
-		package { 'globus-toolkit-repo': 
+		package { 'globus-repo': 
 			ensure => installed,
 			provider => rpm, 
 			source => "http://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm",
