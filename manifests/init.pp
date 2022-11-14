@@ -52,7 +52,7 @@ class globus (
 		} 
 	}
 
-	package { 'globus-connect-server':
+	package { 'globus-connect-server54':
 			ensure => installed
 	} ->
 
