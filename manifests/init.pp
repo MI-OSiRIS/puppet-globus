@@ -52,7 +52,7 @@ class globus (
 		} 
 	}
 
-	package { 'globus-connect-server54':
+	package { 'globus-connect-server':
 			ensure => installed
 	} ->
 
@@ -74,13 +74,13 @@ class globus (
 		tag => [ 'globus-config' ]
 	}
 
-	#if $run_setup {
-	#	exec { 'globus-setup':
-	#		command => '/bin/globus-connect-server-setup',
-	#		refreshonly => true,
-	#		subscribe => File['/etc/globus-connect-server.conf']
-	# 	}
-	#}
+	if $run_setup {
+		exec { 'globus-setup':
+			command => '/bin/globus-connect-server-setup',
+			refreshonly => true,
+			subscribe => File['/etc/globus-connect-server.conf']
+	 	}
+	}
 
 	 service { 'globus-gridftp-server': ensure => running }
 }
