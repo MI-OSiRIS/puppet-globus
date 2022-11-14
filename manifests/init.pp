@@ -49,7 +49,7 @@ class globus (
 			ensure => installed,
 			provider => rpm, 
 			source => "http://downloads.globus.org/toolkit/globus-connect-server/globus-connect-server-repo-latest.noarch.rpm",
-			before => Package['globus-connect-server']
+			before => Package['globus-connect-server54']
 		} 
 	}
 
