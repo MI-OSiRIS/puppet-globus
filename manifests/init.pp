@@ -36,6 +36,11 @@ class globus (
 			dport => '50000-51000',
 			action => 'accept'
 		}
+		
+		firewall { "${firewall_order} allow for Globus GCs5 Manager,GridFTP control,HTTPS access to collections":
+                        dport => '443',
+                        action => 'accept'
+                }
 
 	}
 
